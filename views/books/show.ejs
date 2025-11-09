@@ -1,0 +1,13 @@
+<%- include('../partials/header') %>
+<h2><%= book.title %></h2>
+<p><strong>Author:</strong> <%= book.author %></p>
+<p><strong>Genre:</strong> <%= book.genre %></p>
+<p><strong>Price:</strong> ₹<%= book.price %></p>
+<p><%= book.description %></p>
+<img src="<%= book.image_url %>" width="200">
+<br><br>
+<a href="/books/<%= book.id %>/edit">✏️ Edit</a>
+<form action="/books/<%= book.id %>?_method=DELETE" method="POST">
+  <button>🗑 Delete</button>
+</form>
+<%- include('../partials/footer') %>

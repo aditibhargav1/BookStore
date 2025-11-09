@@ -1,0 +1,12 @@
+<%- include('../partials/header') %>
+<h1>Edit Book</h1>
+<form action="/books/<%= book.id %>?_method=PUT" method="POST">
+  <input type="text" name="title" value="<%= book.title %>"><br>
+  <input type="text" name="author" value="<%= book.author %>"><br>
+  <input type="number" name="price" value="<%= book.price %>"><br>
+  <input type="text" name="genre" value="<%= book.genre %>"><br>
+  <input type="text" name="image_url" value="<%= book.image_url %>"><br>
+  <textarea name="description"><%= book.description %></textarea>
+  <button type="submit">Update</button>
+</form>
+<%- include('../partials/footer') %>

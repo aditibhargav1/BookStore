@@ -1,0 +1,50 @@
+<%- include('../partials/header') %>
+
+<h1>📚 All Books</h1>
+
+<!-- Add New Book Button -->
+<a href="/books/new" class="btn btn-add">➕ Add New Book</a>
+
+<hr>
+
+<!-- Book List -->
+<ul>
+  <% books.forEach(book => { %>
+    <li>
+      <strong><%= book.title %></strong> - ₹<%= book.price %>
+      <br>
+
+      <!-- Edit Button -->
+      <a href="/books/<%= book.id %>/edit" class="btn btn-edit">Edit</a>
+
+      <!-- Delete Button -->
+      <!-- Delete Button using method-override -->
+      <form action="/books/<%= book.id %>?_method=DELETE" method="POST" style="display:inline;">
+      <button type="submit" class="btn btn-delete"> Delete</button>
+      </form>
+
+    </li>
+    <hr>
+  <% }) %>
+</ul>
+
+<%- include('../partials/footer') %>
+
+<!-- Optional styling -->
+<style>
+  body { font-family: Arial, sans-serif; line-height: 1.5; }
+  h1 { color: #2c3e50; }
+  ul { list-style-type: none; padding: 0; }
+  li { margin-bottom: 10px; }
+  .btn {
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: white;
+    font-size: 14px;
+  }
+  .btn-add { background-color: #4CAF50; }
+  .btn-edit { background-color: #2196F3; margin-left: 10px; }
+  .btn-delete { background-color: #f44336; border: none; cursor: pointer; margin-left: 10px; }
+  form { display: inline; }
+</style>
