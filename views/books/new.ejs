@@ -1,27 +1,122 @@
-<!-- views/books/new.ejs -->
 <%- include('../partials/header') %>
 
-<h2>Add a New Book</h2>
-<form action="/books" method="POST">
-  <label>Title:</label>
-  <input type="text" name="title" required><br>
+<div class="container">
+  <h2>Add a New Book 📚</h2>
 
-  <label>Author:</label>
-  <input type="text" name="author" required><br>
+  <form action="/books" method="POST" class="book-form">
 
-  <label>Price:</label>
-  <input type="number" name="price" required><br>
+    <label for="title">Title</label>
+    <input type="text" id="title" name="title" required>
 
-  <label>Description:</label>
-  <textarea name="description"></textarea><br>
+    <label for="author">Author</label>
+    <input type="text" id="author" name="author" required>
 
-  <label>Image URL:</label>
-  <input type="text" name="image_url"><br>
+    <label for="price">Price (₹)</label>
+    <input type="number" id="price" name="price" required>
 
-  <label>Genre:</label>
-  <input type="text" name="genre"><br>
+    <label for="genre">Genre</label>
+    <input type="text" id="genre" name="genre">
 
-  <button type="submit">Add Book</button>
-</form>
+    <label for="image_url">Image URL</label>
+    <input type="text" id="image_url" name="image_url">
+
+    <label for="description">Description</label>
+    <textarea id="description" name="description" rows="5"></textarea>
+
+    <button type="submit" class="btn-add">Add Book</button>
+    <a href="/books" class="btn-cancel">Cancel</a>
+  </form>
+</div>
 
 <%- include('../partials/footer') %>
+
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+  }
+
+  form label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #34495e;
+  }
+
+  form input[type="text"],
+  form input[type="number"],
+  form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+  }
+
+  form input:focus,
+  form textarea:focus {
+    border-color: #3498db;
+    outline: none;
+  }
+
+  form textarea {
+    resize: vertical;
+  }
+
+  .btn-add, .btn-cancel {
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .btn-add {
+    background-color: #4CAF50;
+    color: #fff;
+    margin-right: 10px;
+  }
+
+  .btn-add:hover {
+    background-color: #45a049;
+  }
+
+  .btn-cancel {
+    background-color: #e74c3c;
+    color: #fff;
+  }
+
+  .btn-cancel:hover {
+    background-color: #c0392b;
+  }
+
+  @media(max-width: 640px) {
+    .container {
+      margin: 20px;
+      padding: 20px;
+    }
+  }
+</style>

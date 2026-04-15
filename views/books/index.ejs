@@ -1,50 +1,212 @@
 <%- include('../partials/header') %>
 
-<h1>📚 All Books</h1>
+<div class="container">
+  <h1>📚 Book Collection</h1>
 
-<!-- Add New Book Button -->
-<a href="/books/new" class="btn btn-add">➕ Add New Book</a>
+  <!-- Add New Book Button -->
+  <div class="top-bar">
+    <a href="/books/new" class="btn btn-add">➕ Add New Book</a>
+  </div>
 
-<hr>
+  <!-- Book Grid -->
+  <div class="book-grid">
+    <% books.forEach(book => { %>
+      <div class="book-card">
+        <a href="/books/<%= book.id %>" class="card-link">
+          <img
+            src="<%= book.image_url && book.image_url.trim() !== '' 
+              ? book.image_url 
+              : 'https://via.placeholder.com/200x250?text=No+Image' %>"
+            alt="<%= book.title %>"
+          >
+          <div class="book-info">
+            <h2><%= book.title %></h2>
+            <p><strong>Author:</strong> <%= book.author %></p>
+            <p><strong>Genre:</strong> <%= book.genre || 'N/A' %></p>
+            <p class="price">₹<%= book.price %></p>
+            <p class="description">
+              <%= book.description 
+                ? (book.description.length > 100 
+                    ? book.description.substring(0, 100) + '...' 
+                    : book.description) 
+                : 'No description available.' %>
+            </p>
+          </div>
+        </a>
 
-<!-- Book List -->
-<ul>
-  <% books.forEach(book => { %>
-    <li>
-      <strong><%= book.title %></strong> - ₹<%= book.price %>
-      <br>
-
-      <!-- Edit Button -->
-      <a href="/books/<%= book.id %>/edit" class="btn btn-edit">Edit</a>
-
-      <!-- Delete Button -->
-      <!-- Delete Button using method-override -->
-      <form action="/books/<%= book.id %>?_method=DELETE" method="POST" style="display:inline;">
-      <button type="submit" class="btn btn-delete"> Delete</button>
-      </form>
-
-    </li>
-    <hr>
-  <% }) %>
-</ul>
+        <!-- Buttons -->
+        <div class="card-actions">
+          <a href="/books/<%= book.id %>/edit" class="btn btn-edit"> Edit</a>
+          <form action="/books/<%= book.id %>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-delete"> Delete</button>
+          </form>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
 
 <%- include('../partials/footer') %>
 
-<!-- Optional styling -->
 <style>
-  body { font-family: Arial, sans-serif; line-height: 1.5; }
-  h1 { color: #2c3e50; }
-  ul { list-style-type: none; padding: 0; }
-  li { margin-bottom: 10px; }
-  .btn {
-    text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 6px;
-    color: white;
-    font-size: 14px;
+  /* General Layout */
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
   }
-  .btn-add { background-color: #4CAF50; }
-  .btn-edit { background-color: #2196F3; margin-left: 10px; }
-  .btn-delete { background-color: #f44336; border: none; cursor: pointer; margin-left: 10px; }
-  form { display: inline; }
+
+  .container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 2rem;
+  }
+
+  /* Top Bar */
+  .top-bar {
+    text-align: right;
+    margin-bottom: 25px;
+  }
+
+  /* Add Button */
+  .btn-add {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 25px;
+    font-size: 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .btn-add:hover {
+    background-color: #218838;
+  }
+
+  /* Grid Layout */
+  .book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+  }
+
+  /* Book Card */
+  .book-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+
+  .book-card img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .book-info {
+    padding: 15px;
+  }
+
+  .book-info h2 {
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+    color: #333;
+  }
+
+  .book-info p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  .book-info .price {
+    font-weight: bold;
+    color: #111;
+    margin-top: 8px;
+  }
+
+  .description {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 10px;
+  }
+
+  /* Buttons below card */
+  .card-actions {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    background: #f8f8f8;
+  }
+
+  .btn-edit,
+  .btn-delete {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .btn-edit {
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+  }
+
+  .btn-edit:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-delete {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .btn-delete:hover {
+    background-color: #b02a37;
+  }
+
+  @media (max-width: 600px) {
+    .btn-add {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+
+    .card-actions {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .btn-edit,
+    .btn-delete {
+      width: 90%;
+    }
+  }
 </style>

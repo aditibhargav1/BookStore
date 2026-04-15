@@ -1,13 +1,128 @@
 <%- include('../partials/header') %>
-<h2><%= book.title %></h2>
-<p><strong>Author:</strong> <%= book.author %></p>
-<p><strong>Genre:</strong> <%= book.genre %></p>
-<p><strong>Price:</strong> ₹<%= book.price %></p>
-<p><%= book.description %></p>
-<img src="<%= book.image_url %>" width="200">
-<br><br>
-<a href="/books/<%= book.id %>/edit">✏️ Edit</a>
-<form action="/books/<%= book.id %>?_method=DELETE" method="POST">
-  <button>🗑 Delete</button>
-</form>
+
+<div class="container">
+  <div class="book-detail-card">
+
+    <div class="book-image">
+      <img src="<%= book.image_url && book.image_url.trim() !== '' ? book.image_url : 'https://via.placeholder.com/250x350?text=No+Image' %>" alt="<%= book.title %>">
+    </div>
+
+    <div class="book-info">
+      <h2><%= book.title %> 📖</h2>
+      <p><strong>Author:</strong> <%= book.author %></p>
+      <p><strong>Genre:</strong> <%= book.genre %></p>
+      <p><strong>Price:</strong> ₹<%= book.price %></p>
+      <p><strong>Description:</strong> <%= book.description || 'No description available.' %></p>
+
+      <div class="actions">
+        <a href="/books/<%= book.id %>/edit" class="btn-edit"> Edit</a>
+        <form action="/books/<%= book.id %>?_method=DELETE" method="POST" style="display:inline;">
+          <button type="submit" class="btn-delete"> Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <%- include('../partials/footer') %>
+
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+  }
+
+  .book-detail-card {
+    display: flex;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    flex-wrap: wrap;
+  }
+
+  .book-image {
+    flex: 1 1 250px;
+    max-width: 250px;
+    text-align: center;
+    background-color: #f4f4f4;
+  }
+
+  .book-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0 0 0 12px;
+  }
+
+  .book-info {
+    flex: 2 1 400px;
+    padding: 20px;
+  }
+
+  .book-info h2 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+
+  .book-info p {
+    margin: 8px 0;
+    color: #555;
+    line-height: 1.4;
+  }
+
+  .actions {
+    margin-top: 20px;
+  }
+
+  .btn-edit,
+  .btn-delete {
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: 0.2s;
+  }
+
+  .btn-edit {
+    background-color: #3498db;
+    color: #fff;
+  }
+
+  .btn-edit:hover {
+    background-color: #2980b9;
+  }
+
+  .btn-delete {
+    background-color: #e74c3c;
+    color: #fff;
+  }
+
+  .btn-delete:hover {
+    background-color: #c0392b;
+  }
+
+  @media(max-width: 640px) {
+    .book-detail-card {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .book-info {
+      padding: 15px;
+      text-align: center;
+    }
+  }
+</style>
